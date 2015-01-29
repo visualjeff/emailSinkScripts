@@ -1,0 +1,71 @@
+How to update the email sink docker image:
+
+1. First get the new image to this device...
+
+While your device is on the PAN save the latest copy of the image as a tar file:
+
+  docker save -o haraka-couchdb.tar visualjeff/haraka-couchdb:1.0.0
+  docker save -o cheezymailclient.tar visualjeff/cheezymailclient:1.0.0
+
+On the corporate network transfer the file to our RHE Linux server:
+
+  scp haraka-couchdb.tar jgilber@apdev01094d01.adt.np.costco.com:~
+  scp cheezymailclient.tar jgilber@apdev01094d01.adt.np.costco.com:~
+
+2. Now run the update (this will also backup emails for each environment):
+
+STOP!!!  Are you updating the server or the cheezymailclient or both?
+
+  To update the servers:  ./update_server_only.sh haraka-couchdb.tar visualjeff/haraka-couchdb 1.0.0
+  To update the clients:  ./update_client_only.sh cheezymailclient.tar visualjeff/cheezymailclient 1.0.0
+
+NOTE: If your updating both.  First update the server then follow-up with a client update.
+
+3. For a full update (both server and client) you need to complete the update: 
+
+  ./finishUpdate.sh 
+
+
+That is it!!!
+
+
+Additional handy commands:
+==========================
+
+Kill all of the running containers:
+  sudo docker stop $(sudo docker ps -a -q);
+  sudo docker rm $(sudo docker ps -a -q);
+
+Remove existing image:
+  sudo docker rmi -f visualjeff/haraka-couchdb:latest
+
+Clean up unused containers and old layers (Second command will give lots of warnings):
+  sudo docker rm $(sudo docker ps -a -q)
+  sudo docker rmi $(sudo docker images -a | grep "^<none>" | awk "{print $3}")
+
+Load new image:
+  sudo docker load -i haraka-couchdb.tar
+
+Clean up tar file.  Not needed now:
+  rm haraka-couchdb.tar
+
+Use the start command noted in the google doc:
+  https://docs.google.com/a/costco.com/document/d/1FlsPsuV9cvsEUarfMYjWZ_B5YTz_NqrL3rO9ahQ3P_4
+
+Validate containers are running:
+  sudo docker ps
+
+To view the logs for each container (to double check that they are started):
+  sudo docker logs --tail="all" adt
+  sudo docker logs --tail="all" qat
+  sudo docker logs --tail="all" spt
+
+Test sending an email using swaks:
+  swaks -h 0.0.0.0 -f jgilber@costco.com -t D.nicut@costco.com -s 0.0.0.0 -p 3025
+  swaks -h 0.0.0.0 -f jgilber@costco.com -t D.nicut@costco.com -s 0.0.0.0 -p 3026
+  swaks -h 0.0.0.0 -f jgilber@costco.com -t D.nicut@costco.com -s 0.0.0.0 -p 3027
+
+Test web browser to make sure you can reach each image:
+  ADT: http://apdev01094d01.adt.np.costco.com:3984/_utils/
+  QAT: http://apdev01094d01.adt.np.costco.com:3985/_utils/
+  SPT: http://apdev01094d01.adt.np.costco.com:3986/_utils/

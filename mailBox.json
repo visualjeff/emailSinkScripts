@@ -1,0 +1,9 @@
+{
+  "_id": "_design/mailBox",
+  "language": "javascript",
+  "views": {
+    "messages": {
+      "map": "function(doc) { emit(doc._id, { 'sent': doc.headers.date[0], 'subject': doc.headers.subject[0] }); }"
+    }
+  }
+}
