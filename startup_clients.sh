@@ -2,7 +2,7 @@
 
 echo ""
 
-echo "Starting 3 containers for the cheezyMailClient..."
+echo "Starting containers for the client..."
 
 source .environment_info
 

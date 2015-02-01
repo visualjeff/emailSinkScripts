@@ -13,7 +13,9 @@ backup_data.sh - Exports server data for all environments as a backup.
 restore_data.sh - Imports server data for all environments from most recent backup.
 finishUpdate.sh	- After a server update this script is used to re-import the data.
 startup_clients.sh - Starts up the cheezymailclient for all environments. 
-startup_servers.sh Starts up the haraka-couchdb containers for all environments.
+startup_servers.sh - Starts up the haraka-couchdb containers for all environments.
+shutdown_clients.sh - Shutdown the clients
+shutdown_servers.sh - Backs up servers then shutdown the servers
 update_client_only.sh -	Updates	the cheezymailclient containers	with a new image.
 update_server_only.sh -	Updates	the haraka-couchdb containers with a new image.
 

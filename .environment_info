@@ -3,7 +3,7 @@
 # FQDN of the host
 if [ -n `dnsdomainname` ]; then
     #echo "dnsdomainname is empty"
-    couchdb_host="`hostname`" 
+    couchdb_host="`hostname -i`" 
 else 
     couchdb_host="`hostname`.`dnsdomainname`"
 fi

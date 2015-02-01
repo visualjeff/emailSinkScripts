@@ -38,15 +38,10 @@ if [ ! -f $image_file ]; then
   echo "WARNING: Missing $image_file for loading as a new image"
 else 
 
-  echo "Performing a backup..."
-  ./backup_data.sh  
-
   echo "This may take a few minutes...  I'm loading your new image into docker"
   sudo docker load -i $image_file;
   echo "Shutting $project_name containers down..."
-  sudo docker stop $(sudo docker ps | grep $project_name | awk '{print $1}');
-  echo "Removing old runtime containers..."
-  sudo docker rm $(sudo docker ps -a | grep "Exited" | awk '{print $1}');
+  ./shutdown_servers.sh $project_name
   echo "Untagging $image_name:latest version..."
   sudo docker rmi -f $(echo "$image_name:latest");
   echo "Tagging a new $image_name:latest version..."
