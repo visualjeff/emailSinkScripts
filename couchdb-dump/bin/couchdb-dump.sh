@@ -10,17 +10,12 @@
 ## DB_NAME: name of the database, e.g. 'my-db
 
 
-
-
-
-
-
 ###################### CODE STARTS HERE ###################
 
 ##START: HELPERS FUNCTIONS
 function helpMsg {
-	echo "** usage: bash couchdb-dump.sh DB_URL... DB_NAME..."
-	echo "**  example: bash couchdb-dump.sh mycouch.com my-db"
+	echo "** usage: ./couchdb-dump.sh DB_URL... DB_NAME..."
+	echo "**  example: ./couchdb-dump.sh mycouch.com my-db"
     echo "**  DB_URL: the url of the couchdb instance without 'http://', e.g. mycouch.com"
     echo "**  DB_NAME: name of the database, e.g. 'my-db'"
     echo ""

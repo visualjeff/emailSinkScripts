@@ -4,11 +4,10 @@
 function helpMsg {
         echo ""
         echo "** usage:   ./update_client_only.sh IMAGE_FILE IMAGE_NAME IMAGE_VERSION"
-        echo "** example: ./update_client_only.sh cheezyMailClient.tar visualjeff/cheezyemailclient 1.0.0"
+        echo "** example: ./update_client_only.sh cheezyMailClient.tar visualjeff/cheezymailclient 1.0.0"
     echo ""
 	}
 ## END HELPERS
-
 
 ##NO ARGS
 if [ $# -lt 3 ]; then
@@ -22,12 +21,13 @@ elif [ $# -gt 3 ]; then
      helpMsg
 fi
 
-
 ## VARS
 image_file=$1
 image_name=$2
 project_name=$(echo $2 | sed 's:.*/::')
 image_version=$3
+
+source .environment_info
 
 #echo $image_file
 #echo $image_name
@@ -37,15 +37,13 @@ image_version=$3
 if [ ! -f $image_file ]; then
   echo "WARNING: Missing $image_file for loading as a new image"
 else 
-  COUCHDB_HOST="`hostname`.`dnsdomainname`"
-  export COUCHDB_HOST
 
   echo "This may take a few minutes...  I'm loading your new image into docker"
   sudo docker load -i $image_file;
   echo "Shutting $project_name containers down..."
   sudo docker stop $(sudo docker ps | grep $project_name | awk '{print $1}');
   echo "Removing old runtime containers..."
-  sudo docker rm $(sudo docker ps | grep $project_name | awk '{print $1}');
+  sudo docker rm $(sudo docker ps -a | grep "Exited" | awk '{print $1}');
   echo "Untagging $image_name:latest version..."
   sudo docker rmi -f $(echo "$image_name:latest");
   echo "Tagging a new $image_name:latest version..."

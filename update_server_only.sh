@@ -9,7 +9,6 @@ function helpMsg {
 	}
 ## END HELPERS
 
-
 ##NO ARGS
 if [ $# -lt 3 ]; then
         echo ":::::::::::::::::::::::::::::::::::::::::"
@@ -22,24 +21,22 @@ elif [ $# -gt 3 ]; then
      helpMsg
 fi
 
-
 ## VARS
 image_file=$1
 image_name=$2
 project_name=$(echo $2 | sed 's:.*/::')
 image_version=$3
 
+source .environment_info
+
 #echo $image_file
 #echo $image_name
 #echo $project_name
 #echo $image_version
 
-
 if [ ! -f $image_file ]; then
   echo "WARNING: Missing $image_file for loading as a new image"
 else 
-  COUCHDB_HOST="`hostname`.`dnsdomainname`"
-  export COUCHDB_HOST
 
   echo "Performing a backup..."
   ./backup_data.sh  
@@ -49,7 +46,7 @@ else
   echo "Shutting $project_name containers down..."
   sudo docker stop $(sudo docker ps | grep $project_name | awk '{print $1}');
   echo "Removing old runtime containers..."
-  sudo docker rm $(sudo docker ps | grep $project_name | awk '{print $1}');
+  sudo docker rm $(sudo docker ps -a | grep "Exited" | awk '{print $1}');
   echo "Untagging $image_name:latest version..."
   sudo docker rmi -f $(echo "$image_name:latest");
   echo "Tagging a new $image_name:latest version..."

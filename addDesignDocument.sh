@@ -2,10 +2,8 @@
 
 ##START: HELPERS FUNCTIONS
 function helpMsg {
-	echo "** usage: bash addDesignDocument.sh DB_URL...DB_PORT..."
-	echo "**  example: bash couchdb-dump.sh mycouch.adt.costco.com 3059"
-    echo "**  DB_URL: the url of the couchdb instance without 'http://', e.g. mycouch.com"
-    echo "**  DB_PORT: port used by the database, e.g. '5984'"
+	echo "** usage: ./addDesignDocument.sh DB_URL...DB_PORT..."
+	echo "**  example: ./addDesignDocument.sh mycouch.adt.costco.com 5984"
     echo ""
 
 	}

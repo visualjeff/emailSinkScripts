@@ -1,0 +1,17 @@
+# Here is where you config everything!
+
+# FQDN of the host
+if [ -n `dnsdomainname` ]; then
+    #echo "dnsdomainname is empty"
+    couchdb_host="`hostname`" 
+else 
+    couchdb_host="`hostname`.`dnsdomainname`"
+fi
+
+# Email sinks for the following environments
+declare -a environments='([0]="adt" [1]="qat" [2]="spt" [3]="ecom")'
+
+# Ports used
+starting_smtp_port=3025
+starting_couchdb_port=3984
+starting_cheezy_port=3990

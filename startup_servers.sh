@@ -3,8 +3,14 @@
 echo ""
 echo "Starting 3 containers for haraka-couchdb..."
 
-sudo docker run -d -p 3025:25 -p 3984:5984 --name=adt-haraka-couchdb visualjeff/haraka-couchdb:latest;
-sudo docker run -d -p 3026:25 -p 3985:5984 --name=qat-haraka-couchdb visualjeff/haraka-couchdb:latest;
-sudo docker run -d -p 3027:25 -p 3986:5984 --name=spt-haraka-couchdb visualjeff/haraka-couchdb:latest;
+source .environment_info
 
+smtp_port=$starting_smtp_port
+couchdb_port=$starting_couchdb_port
+for i in "${environments[@]}"; do
+    echo "$i-haraka-couchdb" $smtp_port $couchdb_port
+    #sudo docker run -d -p $smtp_port:25 -p $couchdb_port:5984 --name="$i-haraka-couchdb" visualjeff/haraka-couchdb:latest;
+    smtp_port=$((smtp_port + 1))
+    couchdb_port=$((couchdb_port + 1))   
+done
 echo ""
