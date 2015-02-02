@@ -25,23 +25,33 @@ cd backup
 # Didn't use rename for backup file renames because it depends on an external perl app.
 for file in *.backup4
 do
- mv "$file" "${file%.tar.gz.backup4}.tar.gz.backup5"
+  if [ $file != "*.backup4" ]; then
+    mv "$file" "${file%.tar.gz.backup4}.tar.gz.backup5"
+  fi
 done
 for file in *.backup3
 do
- mv "$file" "${file%.tar.gz.backup3}.tar.gz.backup4"
+  if [ $file != "*.backup3" ]; then
+    mv "$file" "${file%.tar.gz.backup3}.tar.gz.backup4"
+  fi
 done
 for file in *.backup2
 do
- mv "$file" "${file%.tar.gz.backup2}.tar.gz.backup3"
+  if [ $file != "*.backup2" ]; then
+    mv "$file" "${file%.tar.gz.backup2}.tar.gz.backup3"
+  fi
 done
 for file in *.backup1
 do
- mv "$file" "${file%.tar.gz.backup1}.tar.gz.backup2"
+  if [ $file != "*.backup1" ]; then
+    mv "$file" "${file%.tar.gz.backup1}.tar.gz.backup2"
+  fi
 done
 for file in *.tar.gz
 do
- mv "$file" "${file%.tar.gz}.tar.gz.backup1"
+  if [ $file != "*.tar.gz" ]; then
+    mv "$file" "${file%.tar.gz}.tar.gz.backup1"
+  fi
 done
 
 cd ..
