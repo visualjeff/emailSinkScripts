@@ -5,6 +5,7 @@ function helpMsg {
         echo ""
         echo "** usage:   ./shutdown_clients.sh <container_name>"
         echo "** example: ./shutdown_clients.sh cheezymailclient"
+        echo "** example: ./shutdown_clients.sh ecom-cheezymailclient"
     echo ""
 	}
 ## END HELPERS

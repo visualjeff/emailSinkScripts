@@ -5,6 +5,7 @@ function helpMsg {
         echo ""
         echo "** usage:   ./shutdown_servers.sh <container_name>"
         echo "** example: ./shutdown_servers.sh haraka-couchdb"
+        echo "** example: ./shutdown_servers.sh adt-haraka-couchdb"
     echo ""
         }
 ## END HELPERS

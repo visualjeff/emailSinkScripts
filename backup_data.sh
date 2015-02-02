@@ -9,10 +9,13 @@ for i in "${environments[@]}"; do
     port=$(echo $port | grep -Po ' 5984/tcp -> \K.*')
     port=$(expr substr $port 1 4)
     echo "Exporting data from environment $i-haraka-couchdb on $couchdb_host:$port"
-    ./export.sh $couchdb_host $port;tar cvzf "$i.tar.gz" ./data;rm ./data/*.json
+    ./export.sh $couchdb_host $port;tar cvzf "$i.tar.gz" ./data
 done
 echo ""
-rm -rf ./data
+if [ -d "./data" ]; then
+  rm -rf ./data
+fi
+
 
 # Move exported data to data directory
 mkdir -p ./backup
@@ -20,19 +23,19 @@ mkdir -p ./backup
 # Iterate backups.  Basically keeping 3 rounds of backups.
 cd backup
 # Didn't use rename for backup file renames because it depends on an external perl app.
-for file in *.tar.gz.backup4
+for file in *.backup4
 do
  mv "$file" "${file%.tar.gz.backup4}.tar.gz.backup5"
 done
-for file in *.tar.gz.backup3
+for file in *.backup3
 do
  mv "$file" "${file%.tar.gz.backup3}.tar.gz.backup4"
 done
-for file in *.tar.gz.backup2
+for file in *.backup2
 do
  mv "$file" "${file%.tar.gz.backup2}.tar.gz.backup3"
 done
-for file in *.tar.gz.backup1
+for file in *.backup1
 do
  mv "$file" "${file%.tar.gz.backup1}.tar.gz.backup2"
 done
