@@ -32,7 +32,7 @@ arr=( $(echo "`curl -sX GET http://$url:$port/_all_dbs 2>&1`" | grep -Po 'mail_[
 #echo ${arr[*]}
 
 fullUrl="$url:$port"
-echo "exporting from: $fullUrl"
+#echo "  Exporting from: $fullUrl"
 
 mkdir -p ./data
 

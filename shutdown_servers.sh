@@ -22,11 +22,26 @@ elif [ $# -gt 1 ]; then
      helpMsg
 fi
 
-## VARS
-container_name=$(echo $1 | sed 's:.*/::')
-
 echo "Performing a backup..."
-./backup_data.sh  
+
+if [ -n "$1" ]; then
+  #variable set
+  container_name=$(echo $1 | sed 's:.*/::')
+  
+else 
+  #variable not set
+  container_name="haraka-couchdb"
+fi
+
+echo "The container name you entered is: $container_name"
+
+arr=($(sudo docker ps | grep $container_name | awk '{print $12}'))
+
+for i in "${arr[@]}"
+do
+  echo "  Attempting to backup $i"
+  ./backup_data.sh $i
+done
 
 echo "Shutting $project_name containers down..."
 sudo docker stop $(sudo docker ps | grep $container_name | awk '{print $1}');
