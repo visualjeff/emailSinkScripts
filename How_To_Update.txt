@@ -1,6 +1,11 @@
-How to update the email sink docker image:
+How update the email sink docker image:
+=======================================
+NOTE: All environment information is stored in the hidden file: .environment_info  If you just need to add a new environment.  
+Edit the .environment_info file, save and run ./startup_servers.sh. 
 
-1. First get the new image to this device...
+Now if you need to update your docker image follow these steps...
+
+1. First get the new image to apdev01094d01.adt.np.costco.com.
 
 While your device is on the PAN save the latest copy of the image as a tar file:
 
@@ -32,11 +37,14 @@ That is it!!!
 Additional handy commands:
 ==========================
 
-Kill all of the running containers:
+To stop all running containers:
   sudo docker stop $(sudo docker ps -a -q);
-  sudo docker rm $(sudo docker ps -a -q);
+  sudo docker start $(sudo docker ps -a -q);
 
-Remove existing image:
+Kill all of the running containers and clean up the old containers:
+  sudo docker kill $(sudo docker ps -a -q);
+
+Remove an existing image:
   sudo docker rmi -f visualjeff/haraka-couchdb:latest
 
 Clean up unused containers and old layers (Second command will give lots of warnings):
@@ -45,12 +53,6 @@ Clean up unused containers and old layers (Second command will give lots of warn
 
 Load new image:
   sudo docker load -i haraka-couchdb.tar
-
-Clean up tar file.  Not needed now:
-  rm haraka-couchdb.tar
-
-Use the start command noted in the google doc:
-  https://docs.google.com/a/costco.com/document/d/1FlsPsuV9cvsEUarfMYjWZ_B5YTz_NqrL3rO9ahQ3P_4
 
 Validate containers are running:
   sudo docker ps
@@ -61,9 +63,9 @@ To view the logs for each container (to double check that they are started):
   sudo docker logs --tail="all" spt
 
 Test sending an email using swaks:
-  swaks -h 0.0.0.0 -f jgilber@costco.com -t D.nicut@costco.com -s 0.0.0.0 -p 3025
-  swaks -h 0.0.0.0 -f jgilber@costco.com -t D.nicut@costco.com -s 0.0.0.0 -p 3026
-  swaks -h 0.0.0.0 -f jgilber@costco.com -t D.nicut@costco.com -s 0.0.0.0 -p 3027
+  swaks -h 0.0.0.0 -f bigmouhtblob@costco.com -t D.nicut@costco.com -s 0.0.0.0 -p 3025
+  swaks -h 0.0.0.0 -f bigmouthblob@costco.com -t D.nicut@costco.com -s 0.0.0.0 -p 3026
+  swaks -h 0.0.0.0 -f bigmouthblob@costco.com -t D.nicut@costco.com -s 0.0.0.0 -p 3027
 
 Test web browser to make sure you can reach each image:
   ADT: http://apdev01094d01.adt.np.costco.com:3984/_utils/
