@@ -41,7 +41,7 @@ else
   echo "This may take a few minutes...  I'm loading your new image into docker"
   sudo docker load -i $image_file;
   echo "Shutting $project_name containers down..."
-  ./shutdown_clients $project_name
+  ./shutdown_clients.sh $project_name
   echo "Untagging $image_name:latest version..."
   sudo docker rmi -f $(echo "$image_name:latest");
   echo "Tagging a new $image_name:latest version..."

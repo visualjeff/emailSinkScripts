@@ -1,12 +1,12 @@
 # Here is where you config everything!
 
-# FQDN of the host
-if [ -n `dnsdomainname` ]; then
-    #echo "dnsdomainname is empty"
-    couchdb_host="`hostname -i`" 
-else 
+# FQDN of the host.  Commented out to match what we use internally.
+#if [ -n `dnsdomainname` ]; then
+#    #echo "dnsdomainname is empty"
+#    couchdb_host="`hostname -i`" 
+#else 
     couchdb_host="`hostname`.`dnsdomainname`"
-fi
+#fi
 
 # Email sinks for the following environments
 declare -a environments='([0]="adt" [1]="qat" [2]="spt" [3]="ecom")'
