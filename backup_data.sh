@@ -58,7 +58,7 @@ if [ -n "$container_name" ]; then
           mv $file "${file%.tar.gz}.tar.gz.backup1"
       fi
       cd ..
-    tar czf "./backup/$i.tar.gz" data/
+    tar czf "./backup/$i.tar.gz" data/ --remove-files
     echo "  Backup complete $i-haraka-couchdb"
   fi 
 else
@@ -98,7 +98,7 @@ else
        mv $file "${file%.tar.gz}.tar.gz.backup1"
      fi
     cd ..
-    tar czf "./backup/$i.tar.gz" data/
+    tar czf "./backup/$i.tar.gz" data/ --remove-files
     echo "  Backup complete $i-haraka-couchdb"
   fi
   done
