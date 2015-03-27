@@ -35,8 +35,12 @@ FILES=./data/*
 for fileName in $FILES
 do
 	echo "importing $fileName"
-        databaseName=( $(echo $fileName | sed "s/\.json//"))
-        ./bin/couchdb-restore.sh $fullUrl $databaseName $fileName
+	databaseName=( $(echo $fileName | sed "s/\.json//"))
+
+#echo "  DATABASE_NAME=$databaseName"
+#echo "  FILE_NAME=$fileName"
+
+	./bin/couchdb-restore.sh $fullUrl $databaseName $fileName
 done
 echo ""
 echo "Data imported.  Please confirm.  Then remove the data directory that contains your records."

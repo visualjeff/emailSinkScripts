@@ -45,9 +45,10 @@ url=$1
 db_name=( $(echo $2 | sed "s/\.\/data\///"))
 file_name=$3
 
-#echo "  $url"
-#echo "  $db_name"
-#echo "  $file_name"
+#echo "  URL=$url"
+#echo "  DB_NAME=$db_name"
+#echo "  FILE_NAME=$file_name"
+#echo ""
 
 curl -X PUT http://$url/$db_name
 
